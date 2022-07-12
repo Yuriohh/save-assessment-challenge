@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Assessment } from 'src/assessment/assessment.entity';
 import { AssessmentService } from 'src/assessment/assessment.service';
 import { Repository } from 'typeorm';
 import { CreateQuestionsDto } from './dto/questions.dto';
@@ -14,9 +15,9 @@ export class QuestionsService {
     private readonly assessmentService: AssessmentService,
   ) { }
 
-  async create(slug: string, newQuestions: CreateQuestionsDto) {
+  async create(slug: string, newQuestions: CreateQuestionsDto): Promise<Questions> {
     const questions = new Questions();
-    const assessment = await this.assessmentService.geAssessmentBySlug(slug);
+    const assessment: Assessment = await this.assessmentService.getAssessmentBySlug(slug);
 
     await this.questionsRepository.create(questions);
     questions.number_question = newQuestions.number_question;
@@ -27,8 +28,8 @@ export class QuestionsService {
     return questions;
   }
 
-  async getQuestionById(questionId: number) {
-    const question = await this.questionsRepository.findOne({ where: { id: questionId } });
+  async getQuestionById(questionId: number): Promise<Questions> {
+    const question: Questions = await this.questionsRepository.findOne({ where: { id: questionId } });
     return question;
   }
 }

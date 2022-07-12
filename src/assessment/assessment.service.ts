@@ -12,7 +12,7 @@ export class AssessmentService {
     private readonly assessmentRepository: Repository<Assessment>,
   ) { }
 
-  async create(newAssessment: CreateAssessmentDto) {
+  async create(newAssessment: CreateAssessmentDto): Promise<Assessment> {
     const assessment = new Assessment();
     await this.assessmentRepository.create(assessment);
     assessment.title = newAssessment.title;
@@ -20,18 +20,18 @@ export class AssessmentService {
     return assessment;
   }
 
-  async getAssessmentById(id: number) {
-    const prova = await this.assessmentRepository.findOne({ where: { id: id } });
-    return prova;
+  async getAssessmentById(id: number): Promise<Assessment> {
+    const assessment: Assessment = await this.assessmentRepository.findOne({ where: { id: id } });
+    return assessment;
   }
 
-  async geAssessmentBySlug(slug: string) {
-    const prova = await this.assessmentRepository.findOne({ where: { title: slug } });
-    return prova;
+  async getAssessmentBySlug(slug: string): Promise<Assessment> {
+    const assessment: Assessment = await this.assessmentRepository.findOne({ where: { title: slug } });
+    return assessment;
   }
 
-  async read(id: number) {
-    const prova = await this.assessmentRepository.find({
+  async read(id: number): Promise<Assessment[]> {
+    const assessment: Assessment[] = await this.assessmentRepository.find({
       where: {
         id: id
       },
@@ -42,6 +42,6 @@ export class AssessmentService {
       }
     })
 
-    return prova;
+    return assessment;
   }
 }

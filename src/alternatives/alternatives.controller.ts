@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Body, Controller, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Alternatives } from './alternatives.entity';
 import { AlternativesService } from './alternatives.service';
 import { CreateAlternativesDto } from './dto/alternatives.dto';
 
@@ -10,9 +11,9 @@ export class AlternativesController {
   ) { }
 
   @Post('new-alternatives/:question_id')
-  async create(@Param('question_id', ParseIntPipe) questionId: number, @Body() newAlternatives: CreateAlternativesDto) {
-    const question = questionId;
-    const alternatives = await this.alternativesService.create(question, newAlternatives);
+  async create(@Param('question_id', ParseIntPipe) questionId: number, @Body() newAlternatives: CreateAlternativesDto): Promise<Alternatives> {
+    const question: number = questionId;
+    const alternatives: Alternatives = await this.alternativesService.create(question, newAlternatives);
     return alternatives;
   }
 }
