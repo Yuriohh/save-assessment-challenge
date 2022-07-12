@@ -16,7 +16,7 @@ export class QuestionsService {
 
   async create(slug: string, newQuestions: CreateQuestionsDto) {
     const questions = new Questions();
-    const assessment = await this.assessmentService.getProvaByName(slug);
+    const assessment = await this.assessmentService.geAssessmentBySlug(slug);
 
     await this.questionsRepository.create(questions);
     questions.number_question = newQuestions.number_question;

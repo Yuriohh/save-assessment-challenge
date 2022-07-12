@@ -20,12 +20,12 @@ export class AssessmentService {
     return assessment;
   }
 
-  async getProvaById(id: number) {
+  async getAssessmentById(id: number) {
     const prova = await this.assessmentRepository.findOne({ where: { id: id } });
     return prova;
   }
 
-  async getProvaByName(slug: string) {
+  async geAssessmentBySlug(slug: string) {
     const prova = await this.assessmentRepository.findOne({ where: { title: slug } });
     return prova;
   }
