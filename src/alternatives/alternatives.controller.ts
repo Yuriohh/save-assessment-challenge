@@ -11,9 +11,7 @@ export class AlternativesController {
   ) { }
 
   @Post('new-alternatives/:question_id')
-  async create(@Param('question_id', ParseIntPipe) questionId: number, @Body() newAlternatives: CreateAlternativesDto): Promise<Alternatives> {
-    const question: number = questionId;
-    const alternatives: Alternatives = await this.alternativesService.create(question, newAlternatives);
-    return alternatives;
+  async createNewAlternative(@Param('question_id', ParseIntPipe) questionId: number, @Body() newAlternatives: CreateAlternativesDto): Promise<Alternatives> {
+    return this.alternativesService.createAlternative(questionId, newAlternatives);
   }
 }

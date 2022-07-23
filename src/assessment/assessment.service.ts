@@ -1,47 +1,30 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { CreateAssessmentDto } from './dto/assessment.dto';
 import { Assessment } from './assessment.entity';
+import { AssessmentRepository } from './assessment.repository';
 
 @Injectable()
 export class AssessmentService {
   constructor(
-    @InjectRepository(Assessment)
-    private readonly assessmentRepository: Repository<Assessment>,
+    @InjectRepository(AssessmentRepository)
+    private readonly assessmentRepository: AssessmentRepository,
   ) { }
 
-  async create(newAssessment: CreateAssessmentDto): Promise<Assessment> {
-    const assessment = new Assessment();
-    await this.assessmentRepository.create(assessment);
-    assessment.title = newAssessment.title;
-    await this.assessmentRepository.save(assessment);
-    return assessment;
+  async createAssessment(newAssessment: CreateAssessmentDto): Promise<Assessment> {
+    return this.assessmentRepository.save(newAssessment);
   }
 
   async getAssessmentById(id: number): Promise<Assessment> {
-    const assessment: Assessment = await this.assessmentRepository.findOne({ where: { id: id } });
-    return assessment;
+    return this.assessmentRepository.findOne({ where: { id: id } });
   }
 
   async getAssessmentBySlug(slug: string): Promise<Assessment> {
-    const assessment: Assessment = await this.assessmentRepository.findOne({ where: { title: slug } });
-    return assessment;
+    return this.assessmentRepository.getAssessmentBySlug(slug);
   }
 
-  async read(id: number): Promise<Assessment[]> {
-    const assessment: Assessment[] = await this.assessmentRepository.find({
-      where: {
-        id: id
-      },
-      relations: {
-        questions: {
-          alternatives: true,
-        }
-      }
-    })
-
-    return assessment;
+  async getAssessment(id: number): Promise<Assessment> {
+    return this.assessmentRepository.getAssessment(id);
   }
 }

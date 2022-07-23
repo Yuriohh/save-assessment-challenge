@@ -9,8 +9,7 @@ export class QuestionsController {
   constructor(private questionsService: QuestionsService) { }
 
   @Post('new-questions/:slug')
-  async create(@Param('slug') slug: string, @Body() createQuestionsDto: CreateQuestionsDto): Promise<Questions> {
-    const newQuestions: Questions = await this.questionsService.create(slug, createQuestionsDto);
-    return newQuestions;
+  async createNewQuestion(@Param('slug') slug: string, @Body() createQuestionsDto: CreateQuestionsDto): Promise<Questions> {
+    return await this.questionsService.saveQuestion(slug, createQuestionsDto);
   }
 }

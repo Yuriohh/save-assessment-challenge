@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { Questions } from 'src/questions/questions.entity';
+import { Questions } from '../questions/questions.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 
-@Entity()
+@Entity('assessments')
 export class Assessment {
   @PrimaryGeneratedColumn()
   id: number;

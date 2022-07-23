@@ -8,7 +8,7 @@ import {
 import { Alternatives } from '../alternatives/alternatives.entity';
 import { Assessment } from '../assessment/assessment.entity';
 
-@Entity()
+@Entity('questions')
 export class Questions {
   @PrimaryGeneratedColumn()
   id: number;

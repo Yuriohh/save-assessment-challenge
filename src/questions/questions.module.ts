@@ -1,15 +1,18 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Assessment } from 'src/assessment/assessment.entity';
-import { AssessmentService } from 'src/assessment/assessment.service';
+import { AssessmentModule } from 'src/assessment/assessment.module';
 import { QuestionsController } from './questions.controller';
-import { Questions } from './questions.entity';
+import { QuesntionsRepository } from './questions.repository';
 import { QuestionsService } from './questions.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Questions, Assessment])],
+  imports: [
+    TypeOrmModule.forFeature([QuesntionsRepository]),
+    AssessmentModule
+  ],
   controllers: [QuestionsController],
-  providers: [QuestionsService, AssessmentService],
+  providers: [QuestionsService],
+  exports: [QuestionsService]
 })
 export class QuestionsModule { }
